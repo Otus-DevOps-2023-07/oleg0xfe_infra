@@ -21,3 +21,8 @@ oleg0xfe Infra repository
 VPN:
     bastion_IP = 158.160.102.129
     someinternalhost_IP = 10.128.0.17
+
+# ДЗ 4
+
+testapp_IP = 62.84.124.19
+testapp_port = 9292
