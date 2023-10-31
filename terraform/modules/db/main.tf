@@ -7,15 +7,13 @@ terraform {
   }
 }
 
-provider "yandex" {
-  service_account_key_file = var.service_account_key_file
-  cloud_id                 = var.cloud_id
-  folder_id                = var.folder_id
-  zone                     = var.zone
-}
 
-resource "yandex_compute_instance" "app" {
-  name = "reddit-app"
+resource "yandex_compute_instance" "db" {
+  name = "reddit-db"
+
+  labels = {
+    tags = "reddit-db"
+  }
 
   resources {
     cores  = 2
@@ -25,13 +23,14 @@ resource "yandex_compute_instance" "app" {
   boot_disk {
     initialize_params {
       # Указать id образа созданного в предыдущем домашем задании
-      image_id = var.image_id
+      image_id = var.db_disk_image
     }
   }
 
   network_interface {
     # Указан id подсети default-ru-central1-a
     subnet_id = var.subnet_id
+    #subnet_id = yandex_vpc_subnet.app-subnet.id
     nat       = true
   }
 
@@ -46,15 +45,6 @@ resource "yandex_compute_instance" "app" {
     agent = false
     # путь до приватного ключа
     private_key = file(var.private_key_path)
-  }
-
-  provisioner "file" {
-    source      = "files/puma.service"
-    destination = "/tmp/puma.service"
-  }
-
-  provisioner "remote-exec" {
-    script = "files/deploy.sh"
   }
 }
 

@@ -2,7 +2,7 @@ source "yandex" "ubuntu16" {
   service_account_key_file = var.service_account_key_file
   folder_id = var.folder_id
   zone = "ru-central1-a"
-  subnet_id = "e9b6t9ba3s3uc994gmlm"
+  subnet_id = "e9bftujqbdseilenuklk"
   use_ipv4_nat = "true"
   source_image_family = var.source_image_family
   image_name = "reddit-base-${formatdate("MM-DD-YYYY", timestamp())}"
